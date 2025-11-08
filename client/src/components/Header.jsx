@@ -1,12 +1,23 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'wouter';
-import { Phone, Facebook, Instagram, Menu, X } from 'lucide-react';
+import { Phone, Facebook, Instagram, Menu, X, ChevronDown } from 'lucide-react';
 import './Header.css';
 
 const navigationLinks = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
-  { name: 'Fence Options', path: '/fence-options' },
+  { 
+    name: 'Fence Options', 
+    path: '/fence-options',
+    submenu: [
+      { name: 'Arbor and Pergola', path: '/fence-options/arbor-pergola' },
+      { name: 'Chain Link Fences', path: '/fence-options/chain-link' },
+      { name: 'Metal Fences', path: '/fence-options/metal' },
+      { name: 'Vinyl Fences', path: '/fence-options/vinyl' },
+      { name: 'Wood Fences', path: '/fence-options/wood' },
+      { name: 'Outdoor Shower', path: '/fence-options/outdoor-shower' },
+    ]
+  },
   { name: 'Catalog', path: '/catalog' },
   { name: 'Testimonials', path: '/testimonials' },
   { name: 'Financing', path: '/financing' },
@@ -15,10 +26,17 @@ const navigationLinks = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState(false);
   const [location] = useLocation();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+    setMobileSubmenuOpen(false);
+  };
+
+  const toggleMobileSubmenu = () => {
+    setMobileSubmenuOpen(!mobileSubmenuOpen);
   };
 
   return (
@@ -56,17 +74,61 @@ export default function Header() {
             </div>
 
             <nav className="header-nav" data-testid="nav-desktop">
-              {navigationLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  href={link.path}
-                  data-testid={`link-${link.name.toLowerCase().replace(' ', '-')}`}
-                >
-                  <span className={`nav-link ${location === link.path ? 'active' : ''}`}>
-                    {link.name}
-                  </span>
-                </Link>
-              ))}
+              {navigationLinks.map((link) => {
+                if (link.submenu) {
+                  return (
+                    <div 
+                      key={link.path}
+                      className="dropdown-parent"
+                      onMouseEnter={() => setDropdownOpen(true)}
+                      onMouseLeave={() => setDropdownOpen(false)}
+                      onFocus={() => setDropdownOpen(true)}
+                      onBlur={(e) => {
+                        if (!e.currentTarget.contains(e.relatedTarget)) {
+                          setDropdownOpen(false);
+                        }
+                      }}
+                      data-testid="dropdown-fence-options"
+                    >
+                      <Link
+                        href={link.path}
+                        data-testid={`link-${link.name.toLowerCase().replace(' ', '-')}`}
+                      >
+                        <span className={`nav-link ${location === link.path || location.startsWith(link.path + '/') ? 'active' : ''}`}>
+                          {link.name}
+                          <ChevronDown className="icon-sm dropdown-icon" />
+                        </span>
+                      </Link>
+                      {dropdownOpen && (
+                        <div className="dropdown-menu" data-testid="dropdown-menu">
+                          {link.submenu.map((sublink) => (
+                            <Link
+                              key={sublink.path}
+                              href={sublink.path}
+                              data-testid={`link-${sublink.name.toLowerCase().replace(/ /g, '-')}`}
+                            >
+                              <span className={`dropdown-item ${location === sublink.path ? 'active' : ''}`}>
+                                {sublink.name}
+                              </span>
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+                return (
+                  <Link
+                    key={link.path}
+                    href={link.path}
+                    data-testid={`link-${link.name.toLowerCase().replace(' ', '-')}`}
+                  >
+                    <span className={`nav-link ${location === link.path ? 'active' : ''}`}>
+                      {link.name}
+                    </span>
+                  </Link>
+                );
+              })}
             </nav>
 
             <div className="header-right">
@@ -240,18 +302,68 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="mobile-menu-overlay" data-testid="menu-overlay">
           <nav className="mobile-menu-content">
-            {navigationLinks.map((link) => (
-              <Link
-                key={link.path}
-                href={link.path}
-                onClick={() => setMobileMenuOpen(false)}
-                data-testid={`link-mobile-${link.name.toLowerCase().replace(' ', '-')}`}
-              >
-                <span className={`mobile-nav-link ${location === link.path ? 'active' : ''}`}>
-                  {link.name}
-                </span>
-              </Link>
-            ))}
+            {navigationLinks.map((link) => {
+              if (link.submenu) {
+                return (
+                  <div key={link.path} data-testid="mobile-dropdown-fence-options">
+                    <div className="mobile-nav-with-toggle">
+                      <Link
+                        href={link.path}
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          setMobileSubmenuOpen(false);
+                        }}
+                        className="mobile-nav-link-wrapper"
+                        data-testid={`link-mobile-${link.name.toLowerCase().replace(' ', '-')}`}
+                      >
+                        <span className={`mobile-nav-link ${location === link.path || location.startsWith(link.path + '/') ? 'active' : ''}`}>
+                          {link.name}
+                        </span>
+                      </Link>
+                      <button
+                        onClick={toggleMobileSubmenu}
+                        className="mobile-toggle-button"
+                        data-testid="button-toggle-fence-options"
+                        aria-label={mobileSubmenuOpen ? 'Close submenu' : 'Open submenu'}
+                      >
+                        <ChevronDown className={`icon-sm mobile-dropdown-icon ${mobileSubmenuOpen ? 'rotated' : ''}`} />
+                      </button>
+                    </div>
+                    {mobileSubmenuOpen && (
+                      <div className="mobile-submenu" data-testid="mobile-submenu">
+                        {link.submenu.map((sublink) => (
+                          <Link
+                            key={sublink.path}
+                            href={sublink.path}
+                            onClick={() => {
+                              setMobileMenuOpen(false);
+                              setMobileSubmenuOpen(false);
+                            }}
+                            data-testid={`link-mobile-${sublink.name.toLowerCase().replace(/ /g, '-')}`}
+                          >
+                            <span className={`mobile-submenu-item ${location === sublink.path ? 'active' : ''}`}>
+                              {sublink.name}
+                            </span>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+              return (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  data-testid={`link-mobile-${link.name.toLowerCase().replace(' ', '-')}`}
+                >
+                  <span className={`mobile-nav-link ${location === link.path ? 'active' : ''}`}>
+                    {link.name}
+                  </span>
+                </Link>
+              );
+            })}
             <div className="mobile-menu-footer">
               <a
                 href="tel:7742043402"
