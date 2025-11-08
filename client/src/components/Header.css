@@ -1,13 +1,32 @@
+/* Header Navy Background */
 .header-navy {
   position: relative;
   width: 100%;
   z-index: 50;
+  background-color: #1e3a7a;
+  color: white;
 }
 
 .header-container {
   max-width: 100%;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+/* Icon sizes */
+.icon-sm {
+  width: 16px;
+  height: 16px;
+}
+
+.icon-md {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-lg {
+  width: 24px;
+  height: 24px;
 }
 
 @media (min-width: 768px) {
@@ -39,6 +58,7 @@
   height: 64px;
 }
 
+/* Logo Styles */
 .logo-section,
 .logo-section-tablet,
 .logo-section-mobile {
@@ -66,7 +86,7 @@
 }
 
 .star {
-  color: hsl(var(--gold));
+  color: #fbbf24;
   font-size: 14px;
   line-height: 1;
 }
@@ -122,6 +142,7 @@
   border-radius: 50%;
 }
 
+/* Navigation */
 .header-nav {
   display: flex;
   align-items: center;
@@ -159,6 +180,7 @@
   background-color: white;
 }
 
+/* Header Right Section */
 .header-right {
   display: flex;
   align-items: center;
@@ -172,6 +194,7 @@
   }
 }
 
+/* Phone Link */
 .phone-link,
 .phone-link-tablet {
   display: flex;
@@ -189,11 +212,12 @@
   opacity: 0.9;
 }
 
+/* CTA Button */
 .cta-button,
 .cta-button-tablet,
 .cta-button-mobile {
   background-color: white;
-  color: hsl(var(--header-navy));
+  color: #1e3a7a;
   font-weight: 600;
   font-size: 15px;
   padding: 0.75rem 1.5rem;
@@ -211,10 +235,11 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+/* Financing Badge */
 .financing-badge,
 .financing-badge-tablet {
   background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(251, 191, 36, 0.15) 100%);
-  border: 1px solid hsl(var(--gold));
+  border: 1px solid #fbbf24;
   border-radius: 9999px;
   padding: 0.5rem 1rem;
 }
@@ -227,6 +252,7 @@
   white-space: nowrap;
 }
 
+/* Social Icons */
 .social-icons,
 .social-icons-tablet {
   display: flex;
@@ -242,6 +268,7 @@
   opacity: 0.8;
 }
 
+/* Hamburger Button */
 .hamburger-button,
 .hamburger-button-mobile {
   background: none;
@@ -260,13 +287,14 @@
   opacity: 0.8;
 }
 
+/* Mobile Menu */
 .mobile-menu-overlay {
   position: fixed;
   top: 64px;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: hsl(var(--header-navy));
+  background-color: #1e3a7a;
   z-index: 40;
   animation: slideIn 0.25s ease-out;
 }
@@ -299,7 +327,7 @@
 }
 
 .mobile-nav-link.active {
-  color: hsl(var(--gold));
+  color: #fbbf24;
 }
 
 .mobile-menu-footer {
@@ -326,6 +354,7 @@
   gap: 1.5rem;
 }
 
+/* Tablet Layout */
 @media (min-width: 768px) {
   .header-mobile {
     display: none;
@@ -358,6 +387,7 @@
   }
 }
 
+/* Desktop Layout */
 @media (min-width: 1024px) {
   .header-tablet {
     display: none;
