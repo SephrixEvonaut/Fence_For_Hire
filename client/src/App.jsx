@@ -1,5 +1,6 @@
 import { Switch, Route } from "wouter";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import FenceOptions from "./pages/FenceOptions";
@@ -41,6 +42,7 @@ function App() {
           </Route>
         </Switch>
       </main>
+      <Footer />
     </div>
   );
 }
