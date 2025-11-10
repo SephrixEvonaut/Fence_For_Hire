@@ -1,0 +1,87 @@
+.company-info-section {
+  padding: 4rem 1rem;
+  background-color: #f9fafb;
+}
+
+.company-info-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.company-info-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e3a7a;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.company-info-content {
+  margin-bottom: 3rem;
+}
+
+.company-info-text {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: #4b5563;
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+.company-info-text:last-child {
+  margin-bottom: 0;
+}
+
+.company-badges {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.badge-icon {
+  flex-shrink: 0;
+}
+
+.badge-text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e3a7a;
+  text-align: center;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .company-info-section {
+    padding: 5rem 2rem;
+  }
+
+  .company-info-title {
+    font-size: 2.5rem;
+  }
+
+  .company-info-text {
+    font-size: 1.125rem;
+  }
+
+  .company-badges {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .company-info-section {
+    padding: 6rem 2rem;
+  }
+
+  .company-info-title {
+    font-size: 3rem;
+  }
+}
